@@ -91,9 +91,16 @@ public  int maxScreenCol=16;
     public void  update() {
       player.update();
     }
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2= (Graphics2D) g;
+        Graphics2D g2 = (Graphics2D) g;
+        //DEBUG
+        long drawstart = 0;
+        if (keyH.checkdrawtime) {
+            drawstart = System.nanoTime();
+        }
+
+
         //tile
         tileM.draw(g2);
         //object
@@ -109,6 +116,16 @@ public  int maxScreenCol=16;
         player.draw(g2);
         //UI
         ui.draw(g2);
+
+
+        if (keyH.checkdrawtime) {
+            long drawend = System.nanoTime();
+            long passes = drawend - drawstart;
+            g2.setColor(Color.WHITE);
+            g2.drawString("Draw time: " + passes + " ns", 10, 400);
+            System.out.println("Draw time: " + passes + " ns");
+        }
+
         g2.dispose();
 
 
